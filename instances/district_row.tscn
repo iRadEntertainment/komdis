@@ -1,0 +1,153 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://sprites/delete.png" type="Texture" id=1]
+[ext_resource path="res://sprites/update.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "#district_row
+
+
+extends HBoxContainer
+
+var field_inst = preload(\"res://instances/field.tscn\")
+var dic = {}
+
+func _ready():
+	if !dic:
+		return
+	
+	var dic_array = sql.db.fetch_array(\"pragma table_info(district_shift);\")
+	
+	for field in dic_array:
+		var new_field = field_inst.instance()
+		new_field.name             = field[\"name\"]
+		new_field.placeholder_text = field[\"name\"]
+		new_field.hint_tooltip     = field[\"name\"]
+		new_field.field_type       = field[\"type\"]
+		new_field.rect_min_size    = Vector2(48,0)
+		new_field.size_flags_horizontal = SIZE_FILL
+		
+		if dic.has(field[\"name\"]):
+			if typeof(dic[field[\"name\"]]) == TYPE_REAL:
+				new_field.text = \"%2.2f\"%dic[field[\"name\"]]
+			else:
+				new_field.text = str(dic[field[\"name\"]])
+			
+			if field[\"name\"] == \"day\":
+				var date_raw = dic[field[\"name\"]]
+				var month = [\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"Maj\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"][(int(date_raw/100)%1900)-1]
+				var date_format = str(date_raw).right(4) + \" \" + month
+				new_field.text = date_format
+			
+		else:
+			new_field.text = \"\"
+		
+		match field[\"name\"]:
+			\"id\":       new_field.rect_min_size = Vector2(36,0)
+			\"district\": new_field.rect_min_size = Vector2(24*3,0)
+			\"day\":      new_field.rect_min_size = Vector2(24*3,0)
+			\"notes\":    new_field.size_flags_horizontal = SIZE_EXPAND_FILL
+		add_child(new_field)
+		
+	move_child($update,get_child_count()-1)
+
+func update_row():
+	var field_nodes = []
+	for node in get_children():
+		if node is LineEdit:
+			field_nodes.append(node)
+	
+	var values = []
+	var keys   = []
+	for field in field_nodes:
+		keys.append(field.name)
+		if field.text == \"\":
+			values.append(null)
+		else:
+			if field.name == \"notes\":
+				values.append(\"'%s'\"%field.text)
+			else:
+				values.append(field.text)
+	
+	var SET_query = \"\"
+	for i in range(keys.size()):
+		if i == 0:
+			SET_query += \"%s = %s \" % [keys[i],values[i]]
+		else:
+			SET_query += \", %s = %s \" % [keys[i],values[i]]
+	
+	var query = \"UPDATE district_shift SET %s WHERE id = %s;\" % [ SET_query , dic[\"id\"] ]
+	var result = sql.db.query(query)
+	$\"/root/komdis\".console_print(query, Color.whitesmoke)
+	if result:
+		$\"/root/komdis\".console_print(\"row updated\", Color.greenyellow)
+#		$\"/root/komdis\".update_district_shift_panel()
+	
+	else:
+		$\"/root/komdis\".console_print(\"error\", Color.red)
+
+func delete_row():
+	var query = \"DELETE FROM district_shift WHERE id = %s;\"%dic[\"id\"]
+	var result = sql.db.query(query)
+	$\"/root/komdis\".console_print(query, Color.whitesmoke)
+	if result:
+		$\"/root/komdis\".console_print(\"row deleted\", Color.greenyellow)
+		$\"/root/komdis\".call_deferred(\"update_district_shift_panel\")
+	else:
+		$\"/root/komdis\".console_print(\"error\", Color.red)
+
+
+
+
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+func _pressed():
+	$\"..\".delete_row()"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+func _pressed():
+	$\"..\".update_row()"
+
+[node name="district_row" type="HBoxContainer"]
+margin_right = 1024.0
+script = SubResource( 1 )
+
+[node name="delete" type="Button" parent="."]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+script = SubResource( 2 )
+
+[node name="ico" type="TextureRect" parent="delete"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.47984
+margin_top = 4.53392
+margin_right = 5.47984
+margin_bottom = 4.53392
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
+texture = ExtResource( 1 )
+
+[node name="update" type="Button" parent="."]
+margin_left = 28.0
+margin_right = 52.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+script = SubResource( 3 )
+
+[node name="ico" type="TextureRect" parent="update"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.53392
+margin_top = 5.85152
+margin_right = 5.53392
+margin_bottom = 5.85152
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
+texture = ExtResource( 2 )

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://styles/smalltext.tres" type="Theme" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends LineEdit
+
+var field_type = \"\""
+
+[node name="arrive" type="LineEdit"]
+margin_right = 60.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+custom_constants/minimum_spaces = 0
+align = 1
+placeholder_text = "arrive"
+placeholder_alpha = 0.15
+caret_blink = true
+script = SubResource( 1 )

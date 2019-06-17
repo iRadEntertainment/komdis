@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://instances/district_panel.gd" type="Script" id=1]
+[ext_resource path="res://instances/district_row.tscn" type="PackedScene" id=2]
+
+[node name="district_panel" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+script = ExtResource( 1 )
+
+[node name="district_shift_scroll" type="ScrollContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="district_shift_list" type="VBoxContainer" parent="district_shift_scroll"]
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="district_row" parent="district_shift_scroll/district_shift_list" instance=ExtResource( 2 )]
+margin_bottom = 24.0
