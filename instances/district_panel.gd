@@ -25,25 +25,25 @@ func update_panel():
 		new_row.dic = dic
 		#--- separators
 		if dic.has("day"):
-			var day   = dic["day"]%100
-			var month = (int(dic["day"]/100))%100
-			var date = {"day":day , "month":month , "year":2019}
-			var to_unix = OS.get_unix_time_from_datetime(date)
-			var weekday = OS.get_datetime_from_unix_time(to_unix)["weekday"]
+#			var day   = dic["day"]%100
+#			var month = (int(dic["day"]/100))%100
+#			var date = {"day":day , "month":month , "year":2019}
+#			var to_unix = OS.get_unix_time_from_datetime(date)
+#			var weekday = OS.get_datetime_from_unix_time(to_unix)["weekday"]
 			
-			print("weekday:",prev_weekday,weekday)
+#			print("weekday:",prev_weekday,weekday)
 			
-			if prev_weekday < weekday:
-				var Hsep1 = HSeparator.new()
-				Hsep1.modulate = Color.crimson
-				$district_shift_scroll/district_shift_list.add_child(Hsep1)
+#			if prev_weekday < weekday:
+#				var Hsep1 = HSeparator.new()
+#				Hsep1.modulate = Color.crimson
+#				$district_shift_scroll/district_shift_list.add_child(Hsep1)
 			
 			if dic["day"] != prev_day:
 				var Hsep = HSeparator.new()
 				Hsep.modulate = Color.green
 				$district_shift_scroll/district_shift_list.add_child(Hsep)
 			
-			prev_weekday = weekday
+#			prev_weekday = weekday
 			prev_day = dic["day"]
 		#--- add new voice after separators checks
 		$district_shift_scroll/district_shift_list.add_child(new_row)

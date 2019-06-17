@@ -43,7 +43,7 @@ func _ready():
 			new_field.text = \"\"
 		
 		match field[\"name\"]:
-			\"id\":       new_field.rect_min_size = Vector2(36,0)
+			\"id\":       new_field.rect_min_size = Vector2(48,0)
 			\"district\": new_field.rect_min_size = Vector2(24*3,0)
 			\"day\":      new_field.rect_min_size = Vector2(24*3,0)
 			\"notes\":    new_field.size_flags_horizontal = SIZE_EXPAND_FILL

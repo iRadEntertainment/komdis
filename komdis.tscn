@@ -8,13 +8,13 @@
 [ext_resource path="res://sprites/lock.png" type="Texture" id=6]
 [ext_resource path="res://console_log.gd" type="Script" id=7]
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Button
 
 func _pressed():
 	$\"../../district_panel\".update_panel()"
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=2]
 script/source = "extends LineEdit
 
 func _ready():
@@ -26,7 +26,7 @@ func _new_filter(val):
 	$\"../../district_panel\".select_filter = val
 	$\"../../district_panel\".update_panel()"
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=3]
 script/source = "extends HBoxContainer
 
 
@@ -45,7 +45,7 @@ func _ready():
 			add_child(new_field)
 	move_child($add_shift,get_child_count()-1)"
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
 
@@ -94,7 +94,7 @@ func clear_fields():
 		if node is LineEdit:
 			node.text = \"\""
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=5]
 script/source = "extends OptionButton
 
 # Declare member variables here. Examples:
@@ -107,7 +107,7 @@ func _ready():
 	for i in range (1,32):
 		add_item(str(i),i)"
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=6]
 script/source = "extends OptionButton
 
 # Declare member variables here. Examples:
@@ -117,10 +117,10 @@ script/source = "extends OptionButton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	clear()
-	for i in range (1,12):
+	for i in range (1,13):
 		add_item(str(i),i)"
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=7]
 script/source = "extends OptionButton
 
 func _ready():
@@ -130,7 +130,7 @@ func _ready():
 		add_item(str(num),i)
 		i += 1"
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=8]
 script/source = "extends Button
 
 func _pressed():
@@ -142,7 +142,7 @@ func hide_all():
 	$\"../../../query_row\".hide()
 	$\"../../../btn_console\".show()"
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Button
 
 func _pressed():
@@ -155,7 +155,7 @@ func _pressed():
 	
 	$\"/root/komdis\".console_print(lines, col)"
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Button
 
 func _pressed():
@@ -168,7 +168,7 @@ func _pressed():
 	
 	$\"/root/komdis\".console_print(lines, col)"
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Button
 
 func _pressed():
@@ -178,7 +178,7 @@ func _pressed():
 	else:
 		$ico.texture = load(\"res://sprites/unlock.png\")"
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 
 func _pressed():
@@ -187,7 +187,7 @@ func _pressed():
 	
 	$\"/root/komdis\".console_print(result, col)"
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Button
 
 
@@ -197,7 +197,7 @@ func _pressed():
 	$\"/root/komdis\".console_print( sql.db.fetch_array(query), col )
 	print(sql.db.fetch_array(query))"
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=14]
 script/source = "extends LineEdit
 
 func _ready():
@@ -213,7 +213,7 @@ func blabla(text):
 		response = \"error\"
 	$\"/root/komdis\".console_print( response, col )"
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Button
 
 func _ready():
@@ -248,15 +248,15 @@ margin_right = 992.0
 margin_bottom = 32.0
 
 [node name="btn_update" type="Button" parent="main/opt_row"]
-margin_right = 75.0
+margin_right = 69.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 theme = ExtResource( 2 )
 text = "update"
-script = SubResource( 15 )
+script = SubResource( 1 )
 
 [node name="filter" type="LineEdit" parent="main/opt_row"]
-margin_left = 79.0
+margin_left = 73.0
 margin_right = 992.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
@@ -264,46 +264,45 @@ size_flags_vertical = 3
 theme = ExtResource( 3 )
 expand_to_text_length = true
 clear_button_enabled = true
-script = SubResource( 14 )
+script = SubResource( 2 )
 
 [node name="add_shift" type="HBoxContainer" parent="main"]
-editor/display_folded = true
 margin_top = 36.0
 margin_right = 992.0
 margin_bottom = 68.0
-script = SubResource( 1 )
+script = SubResource( 3 )
 
 [node name="add_shift" type="Button" parent="main/add_shift"]
-margin_right = 92.0
+margin_right = 83.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 theme = ExtResource( 2 )
 text = "add shift"
-script = SubResource( 2 )
-
-[node name="day" type="OptionButton" parent="main/add_shift"]
-margin_left = 96.0
-margin_right = 177.0
-margin_bottom = 32.0
-theme = ExtResource( 3 )
-text = "4001"
-items = [ "4001", null, false, 0, null, "4103", null, false, 1, null, "4405", null, false, 2, null, "4002", null, false, 3, null ]
-selected = 0
-script = SubResource( 3 )
-
-[node name="month" type="OptionButton" parent="main/add_shift"]
-margin_left = 181.0
-margin_right = 262.0
-margin_bottom = 32.0
-theme = ExtResource( 3 )
-text = "4001"
-items = [ "4001", null, false, 0, null, "4103", null, false, 1, null, "4405", null, false, 2, null, "4002", null, false, 3, null ]
-selected = 0
 script = SubResource( 4 )
 
+[node name="day" type="OptionButton" parent="main/add_shift"]
+margin_left = 87.0
+margin_right = 168.0
+margin_bottom = 32.0
+theme = ExtResource( 3 )
+text = "4001"
+items = [ "4001", null, false, 0, null, "4103", null, false, 1, null, "4405", null, false, 2, null, "4002", null, false, 3, null ]
+selected = 0
+script = SubResource( 5 )
+
+[node name="month" type="OptionButton" parent="main/add_shift"]
+margin_left = 172.0
+margin_right = 253.0
+margin_bottom = 32.0
+theme = ExtResource( 3 )
+text = "4001"
+items = [ "4001", null, false, 0, null, "4103", null, false, 1, null, "4405", null, false, 2, null, "4002", null, false, 3, null ]
+selected = 0
+script = SubResource( 6 )
+
 [node name="2019" type="Label" parent="main/add_shift"]
-margin_left = 266.0
-margin_right = 320.0
+margin_left = 257.0
+margin_right = 311.0
 margin_bottom = 32.0
 size_flags_vertical = 7
 theme = ExtResource( 3 )
@@ -311,14 +310,14 @@ text = " 2019 "
 valign = 1
 
 [node name="distr" type="OptionButton" parent="main/add_shift"]
-margin_left = 324.0
-margin_right = 405.0
+margin_left = 315.0
+margin_right = 396.0
 margin_bottom = 32.0
 theme = ExtResource( 3 )
 text = "4001"
 items = [ "4001", null, false, 0, null, "4103", null, false, 1, null, "4405", null, false, 2, null, "4002", null, false, 3, null, "4407", null, false, 5, null ]
 selected = 0
-script = SubResource( 5 )
+script = SubResource( 7 )
 
 [node name="hsep" type="HSeparator" parent="main"]
 margin_top = 72.0
@@ -356,7 +355,7 @@ margin_bottom = 28.0
 rect_min_size = Vector2( 0, 24 )
 theme = ExtResource( 2 )
 text = "hide console"
-script = SubResource( 12 )
+script = SubResource( 8 )
 
 [node name="clear" type="Button" parent="main/panel/buttons"]
 margin_top = 32.0
@@ -374,7 +373,7 @@ margin_bottom = 92.0
 rect_min_size = Vector2( 0, 24 )
 theme = ExtResource( 2 )
 text = "print district shifts"
-script = SubResource( 6 )
+script = SubResource( 9 )
 
 [node name="pragma" type="Button" parent="main/panel/buttons"]
 margin_top = 96.0
@@ -383,7 +382,7 @@ margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 theme = ExtResource( 2 )
 text = "pragma district_shift"
-script = SubResource( 7 )
+script = SubResource( 10 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="main/panel/buttons"]
 margin_top = 128.0
@@ -399,7 +398,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
 custom_constants/hseparation = 0
-script = SubResource( 8 )
+script = SubResource( 11 )
 
 [node name="ico" type="TextureRect" parent="main/panel/buttons/HBoxContainer/lock"]
 anchor_right = 1.0
@@ -423,7 +422,7 @@ size_flags_vertical = 3
 theme = ExtResource( 2 )
 disabled = true
 text = "delete all from District_shift"
-script = SubResource( 9 )
+script = SubResource( 12 )
 
 [node name="scroll" type="ScrollContainer" parent="main/panel"]
 margin_left = 284.0
@@ -454,15 +453,15 @@ margin_right = 992.0
 margin_bottom = 512.0
 
 [node name="btn_fetch" type="Button" parent="main/query_row"]
-margin_right = 58.0
+margin_right = 54.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 theme = ExtResource( 2 )
 text = "fetch"
-script = SubResource( 10 )
+script = SubResource( 13 )
 
 [node name="cmd_line" type="LineEdit" parent="main/query_row"]
-margin_left = 62.0
+margin_left = 58.0
 margin_right = 992.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
@@ -470,7 +469,7 @@ size_flags_vertical = 3
 theme = ExtResource( 3 )
 expand_to_text_length = true
 clear_button_enabled = true
-script = SubResource( 11 )
+script = SubResource( 14 )
 
 [node name="btn_console" type="Button" parent="main"]
 margin_top = 516.0
@@ -479,7 +478,7 @@ margin_bottom = 548.0
 rect_min_size = Vector2( 0, 32 )
 theme = ExtResource( 2 )
 text = "console"
-script = SubResource( 13 )
+script = SubResource( 15 )
 
 [node name="footer" type="Label" parent="main"]
 margin_top = 552.0
